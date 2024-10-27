@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{{ url_for('loja') }}" class="btn" style="margin-bottom: 20px; background-color: #d679a3;">Voltar para a Loja</a>
+    <h2>{{ produto.nome }}</h2>
+    <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" style="width: 300px; border-radius: 5px;">
+    <p>Preço: R$ {{ "%.2f"|format(produto.preco) }}</p>
+    <p>{{ produto.descricao }}</p>
+    <p>Quantidade em Estoque: {{ produto.quantidade_estoque }}</p>
+    
+    <form method="POST" style="margin-top: 20px;">
+        <label for="quantidade">Quantidade a comprar:</label>
+        <input type="number" id="quantidade" name="quantidade" min="1" max="{{ produto.quantidade_estoque }}" required>
+        <button type="submit" style="background-color: #4CAF50; color: white; padding: 5px 10px; border-radius: 5px;">Confirmar Compra</button>
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+{% endblock %}

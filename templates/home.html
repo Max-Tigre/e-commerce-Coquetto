@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 style="text-align: center;">Bem-vindo à loja</h2>
+    <h3 style="text-align: center;">Faça seu login para acessar nossos produtos a venda!</h3>
+    <div class="content">
+        <a href="{{ url_for('create') }}" class="btn">Cadastro</a>
+        <a href="{{ url_for('login') }}" class="btn">Login</a>
+        <a href="{{ url_for('produtos') }}" class="btn">Produtos</a>
+    </div>
+{% endblock %}

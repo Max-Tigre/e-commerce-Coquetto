@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{{ url_for('home') }}" class="btn" style="margin-bottom: 20px; background-color: #d679a3; width: auto;">Início</a>
+    <h2>Bem-vindo à Loja</h2>
+    <p>Aqui você pode encontrar nossos produtos.</p>
+    
+    <div class="product-container" style="display: flex; flex-wrap: wrap; justify-content: center;">
+        {% for produto in produtos %}
+            <div class="product-card" style="border: 1px solid #ccc; border-radius: 10px; margin: 10px; padding: 10px; width: 200px; text-align: center;">
+                <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" style="width: 100%; border-radius: 5px;">
+                <h3>{{ produto.nome }}</h3>
+                <p>Preço: R$ {{ "%.2f"|format(produto.preco) }}</p>
+                <p>{{ produto.descricao }}</p>
+                <p>Quantidade em Estoque: {{ produto.quantidade_estoque }}</p>
+                <a href="{{ url_for('comprar_produto', id=produto.id) }}" class="btn" style="background-color: #4CAF50; color: white; text-decoration: none; padding: 5px 10px; border-radius: 5px; margin-top: 10px;">Comprar</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

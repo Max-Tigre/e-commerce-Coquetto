@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{{ url_for('home') }}" class="btn" style="margin-bottom: 20px; background-color: #d679a3; width: auto;">Início</a>
+    <div class="form-container">
+        <form method="POST" class="form">
+            <h2>Atualizar Informações do Cliente</h2>
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" value="{{ cliente.nome }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ cliente.email }}" required>
+            </div>
+            <div class="form-group">
+                <label for="data_nascimento">Data de Nascimento:</label>
+                <input type="date" id="data_nascimento" name="data_nascimento" value="{{ cliente.data_nascimento }}" required onchange="calcularIdade()">
+            </div>
+            <div id="idade" style="margin-top: 10px; font-weight: bold;"></div>
+            <button type="submit" class="btn">Atualizar</button>
+        </form>
+    </div>
+
+    <style>
+        .form-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .form {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <script>
+        function calcularIdade() {
+            const dataNascimento = new Date(document.getElementById('data_nascimento').value);
+            const hoje = new Date();
+            let idade = hoje.getFullYear() - dataNascimento.getFullYear();
+            const mes = hoje.getMonth() - dataNascimento.getMonth();
+
+            if (mes < 0 || (mes === 0 && hoje.getDate() < dataNascimento.getDate())) {
+                idade--;
+            }
+
+            document.getElementById('idade').innerText = `Idade: ${idade} anos`;
+        }
+
+        window.onload = function() {
+            calcularIdade();
+        };
+    </script>
+{% endblock %}
