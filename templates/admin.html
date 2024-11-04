@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{{ url_for('home') }}" class="btn" style="margin-bottom: 20px; background-color: #d679a3; width: auto;">Início</a>
+    
+    <h2>Painel do Administrador</h2>
+    <p>Escolha uma opção para gerenciar o sistema:</p>
+    
+    <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
+       
+        <a href="{{ url_for('index') }}" class="btn" style="padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Gerenciar Cadastros</a>
+        
+        <a href="{{ url_for('produtos') }}" class="btn" style="padding: 10px 20px; background-color: #2196F3; color: white; text-decoration: none; border-radius: 5px;">Gerenciar Produtos</a>
+  
+        
+        <a href="{{ url_for('relatorio') }}" class="btn" style="padding: 10px 20px; background-color: #cd39f1; color: white; text-decoration: none; border-radius: 5px;">Relatório</a>
+    </div>
+
+{% endblock %}

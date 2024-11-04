@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{ url_for('admin') }}" class="btn" style="margin-bottom: 20px; background-color: #d679a3; width: auto;">Voltar</a>    
+    <h2>Relatório de Vendas</h2>
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #ddd; padding: 8px;">Cliente</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Produto</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Quantidade</th>
+                <th style="border: 1px solid #ddd; padding: 8px;">Data da Venda</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for venda in vendas %}
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ venda.cliente.nome }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ venda.produto.nome }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ venda.quantidade }}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{ venda.data_venda.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if not vendas %}
+        <p>Nenhuma venda registrada.</p>
+    {% endif %}
+{% endblock %}

@@ -2,7 +2,6 @@
 
 {% block content %}
     <a href="{{ url_for('home') }}" class="btn" style="margin-bottom: 20px; background-color: #d679a3; width: auto;">Início</a>
-    <a href="{{ url_for('index') }}" class="btn" style="margin-top: 10px; background-color: #d679a3; width: auto;">Lista de Contas</a>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}

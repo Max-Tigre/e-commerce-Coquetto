@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from models import db, Cliente, Produto
+from models import db, Cliente, Produto, Venda
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, date
 import os  
@@ -47,7 +47,7 @@ def create():
         )
         db.session.add(novo_cliente)
         db.session.commit()
-        return redirect(url_for('index')) 
+        return redirect(url_for('home')) 
     
     return render_template('create.html')
 
@@ -141,6 +141,16 @@ def login():
 
     return render_template('login.html', error_message=error_message)
 
+@app.route('/admin_access', methods=['POST'])
+def admin_access():
+    admin_password = request.form.get('admin_password')
+    
+    if admin_password == '1234':
+        return redirect(url_for('admin'))
+    else:
+        flash('Senha de administrador incorreta.', 'error')
+        return redirect(url_for('login'))
+
 @app.route('/loja')
 def loja():
     produtos = Produto.query.all()  
@@ -171,19 +181,31 @@ def delete(id):
 
 @app.route('/comprar/<int:id>', methods=['GET', 'POST'])
 def comprar_produto(id):
-    produto = Produto.query.get_or_404(id)  
+    produto = Produto.query.get_or_404(id)
     if request.method == 'POST':
-        quantidade_comprada = int(request.form['quantidade'])  
+        quantidade_comprada = int(request.form['quantidade'])
 
         if quantidade_comprada <= produto.quantidade_estoque:
-            produto.quantidade_estoque -= quantidade_comprada  
-            db.session.commit() 
+            produto.quantidade_estoque -= quantidade_comprada
+            nova_venda = Venda(cliente_id=1, produto_id=id, quantidade=quantidade_comprada)
+            db.session.add(nova_venda)
+            db.session.commit()
             flash('Compra realizada com sucesso!', 'success')
             return redirect(url_for('loja'))
         else:
             flash('Quantidade insuficiente em estoque.', 'error')
 
     return render_template('comprar_produto.html', produto=produto)
+
+
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
+
+@app.route('/relatorio')
+def relatorio():
+    vendas = Venda.query.join(Cliente).join(Produto).all() 
+    return render_template('relatorio.html', vendas=vendas)
 
 if __name__ == '__main__':
     app.run(debug=True)

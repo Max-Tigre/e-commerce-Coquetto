@@ -1,84 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="form-container">
-        <form method="POST" class="form">
-            <a href="{{ url_for('home') }}" class="btn" style="margin-bottom: 20px; background-color: #d679a3; width: auto;">Início</a>
-            <h2>Login</h2>
-            {% if error_message %}
-                <div class="error-message" style="color: red; text-align: center;">
-                    {{ error_message }}
-                </div>
-            {% endif %}
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Senha:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn">Entrar</button>
-        </form>
-    </div>
+    <h2>Login</h2>
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+    <form method="POST" action="{{ url_for('login') }}">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Senha:</label>
+            <input type="password" name="password" required>
+        </div>
+        
+        <button type="submit">Entrar</button>
+    </form>
 
-    <style>
-        .form-container {
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .form {
-            background-color: #ffffff;
-            padding: 20px 30px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #333;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <h3>Acesso de Administrador</h3>
+    <form method="POST" action="{{ url_for('admin_access') }}">
+        <div>
+            <label for="admin_password">Senha de Administrador:</label>
+            <input type="password" name="admin_password" required>
+        </div>
+        <button type="submit">Enviar</button>
+    </form>
 {% endblock %}
